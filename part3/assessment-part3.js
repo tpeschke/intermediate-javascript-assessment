@@ -13,7 +13,7 @@
 // return the result of your updateAnimal invocation
 
 // CODE HERE...
-function callBinding (magicAnimals, updateAnimal, id) {
+function callBinding(magicAnimals, updateAnimal, id) {
     for (i = 0; i < magicAnimals.length; i++) {
         if (magicAnimals[i].id == id) {
             return updateAnimal.call(magicAnimals[i], 'Trogdor')
@@ -60,9 +60,9 @@ function applyBinding(magicAnimals, updateAnimal, id) {
 var foo;
 
 // CODE HERE...
-function promiseMe ($q) {
-    return new Promise((resolve,reject)=> {
-        setTimeout(resolve,20)
+function promiseMe($q) {
+    return $q((resolve, reject) => {
+        setTimeout(resolve, 20)
     }).then(res => 'bar')
 }
 
@@ -80,11 +80,16 @@ function promiseMe ($q) {
 // and then resolve the array as you complete your promise.
 
 // CODE HERE...
-function emailList ($q, $http) {
+function emailList($q, $http) {
 
     var prom = new Promise ((resolve, reject) => {
-        $http.get('/api/users').then(res => resolve(res.data))
-    })
+        $http.get('/api/users').then(res => {
+            var list = res.data.map(val => {
+                return val.email
+            })
+            resolve(list)
+        })
+    }).then()
 
-    return prom.then(res => emails = res)
+    return prom
 }
